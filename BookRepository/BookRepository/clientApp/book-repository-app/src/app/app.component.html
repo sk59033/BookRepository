@@ -1,0 +1,125 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    Book Repository
+  </a>
+</nav>
+
+<div class="container">
+  <div class="row">
+  <div class="form-group">
+  <div class="col-sm-6">
+    <label for="bookname">Book Name</label>
+    <input id="bookname"
+          name="bookname"
+          type="text" 
+          [(ngModel)]="book.BookName"
+          pInputText
+          required
+          >
+  </div>
+  <div class="col-sm-6">
+    <label for="authorname">Author Name</label>
+    <input id="authorname" 
+          name="authorname"
+          type="text" 
+          [(ngModel)]="book.AuthorName"
+          pInputText
+          required> 
+  </div>
+  <div class="col-sm-6">
+    <label for="status">Status</label>
+    <p-dropdown inputId="bookStatusTypes" 
+                [options]="bookStatusTypes" 
+                [(ngModel)]="selectedStatus"
+                placeholder="Select" 
+                optionLabel="status"
+                >
+  </p-dropdown>
+  </div>
+  <br>
+<div class="col-sm-12" *ngIf="flag=='add'">
+  <button pButton type="submit" name="addbook" label="Add Book" (click)="AddBook(book,selectedStatus)"></button>&nbsp;
+  <button pButton type="button" name="reset" label="Reset" (click)="Reset()"></button>
+</div>
+<div class="col-sm-12" *ngIf="flag=='update'">
+  <button pButton type="submit" name="addbook" label="Update Book" (click)="AddBook(book,selectedStatus)"></button>&nbsp;
+  <button pButton type="button" name="reset" label="Reset" (click)="Reset()"></button>
+</div>
+</div>
+</div>
+
+  
+ <div class="row">
+  <div class="form-group col-sm-12 align-horizontal">
+    <div class="col-sm-6 align-label">
+      <label for="search">Search By Book Name Or Author Name</label>
+      <div class="align-input"><input id="search"
+            name="search"
+            type="text" 
+            [(ngModel)]="bookSearch"
+            pInputText
+            required
+            ></div>
+    </div>
+    <div class="col-sm-6 align-btn">
+      <button pButton type="button" name="searchbook" label="Search BooK" (click)="searchBook(bookSearch)"></button>&nbsp;
+      <button pButton type="button" name="clearsearch"class="p-button-secondary" label="Clear Search" (click)="clearSearch()"></button>
+    </div>
+  </div>
+ </div>
+ 
+
+
+<div class="row">
+    <p-table #dt1 [value]="allBooks"  
+        dataKey="id" 
+        [rows]="5" 
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,15,20,25,30,35,40,45,50]" 
+        [loading]="loading" 
+        styleClass="p-datatable-allBooks" 
+        [paginator]="true"
+        [lazy]="false"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['book.bookName','book.authorName']">
+       
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+              <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> &nbsp;
+              <span class="p-input-icon-left p-ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+              </span>
+          </div>
+      </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+        <th>Book Name </th>
+        <th>Author Name </th>
+        <th>Book Status </th>
+        <th>Action</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-book>
+      <tr>
+          <td>{{book.bookName}}</td>
+          <td>{{book.authorName}}</td>
+          <td>{{book.status==1?'Available':'Rented'}}</td>
+          <td>   
+            <button pButton type="button" name="deletebook" label="Delete" class="p-button-danger" (click)="deleteBook(book.id)"></button>&nbsp;
+            <button pButton type="button" name="updatebook" label="Edit"  (click)="editBook(book)"></button>
+          </td>
+          
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5">No book found.</td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
+</div>
+
+
+

@@ -1,0 +1,16 @@
+.align-horizontal {
+    display: flex;
+    flex-direction: row;
+}
+.align-label {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+.align-label label{
+    padding-right: 30px;
+}
+
+.align-btn {
+    flex:1;
+}

@@ -1,0 +1,4 @@
+1. Before run the API please restore the database backup to sql server or create database and tables using given script
+2. Before run the api please update the connection string in appsettiong.json file
+3. swagger integrated with this api 
+4. Technology used C#, Dotnet Core 5, Angular 11, Primeng controls, SQL server 2016 
